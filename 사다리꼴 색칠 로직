@@ -1,0 +1,19 @@
+-- 경사 계산
+slope_left = (BOTTOM_X_L - TOP_X_L) / (BOTTOM_Y - TOP_Y);
+slope_right = (BOTTOM_X_R - TOP_X_R) / (BOTTOM_Y - TOP_Y);
+
+-- 각 스캔 라인(y 좌표)에 대해
+for y in TOP_Y to BOTTOM_Y loop
+    -- 왼쪽 경계 계산
+    x_left = TOP_X_L + slope_left * (y - TOP_Y);
+
+    -- 오른쪽 경계 계산
+    x_right = TOP_X_R + slope_right * (y - TOP_Y);
+
+    -- 현재 x 좌표가 x_left와 x_right 사이에 있는지 확인
+    if (x >= x_left) and (x <= x_right) then
+        rail_on <= 1;  -- 사다리꼴 내부
+    else
+        rail_on <= 0;  -- 사다리꼴 외부
+    end if;
+end loop;
